@@ -70,3 +70,4 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                                      database=db_name)
     return con
 
+
