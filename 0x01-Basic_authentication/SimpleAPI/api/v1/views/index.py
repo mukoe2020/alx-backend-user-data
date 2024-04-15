@@ -36,3 +36,13 @@ def un_recognized() -> str:
       - 401 error
     """
     abort(401)
+    
+  @app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+  def not_allowed() -> str:
+      """ 
+      GET /api/v1/forbidden
+      Return:
+        - 403 error
+      """
+      abort(403)
+  
