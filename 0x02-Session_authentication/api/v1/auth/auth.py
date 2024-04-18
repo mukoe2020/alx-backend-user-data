@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""
-# basic authentication setting up
-"""
+"""Setting up basic authentication for the API"""
+
+
 from flask import request
 from typing import List, TypeVar
+import os
 
 
-class Auth():
+class Auth:
     """Auth class to manage the API authentication"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
@@ -35,3 +36,10 @@ class Auth():
     def current_user(self, request=None) -> TypeVar('User'):  # type: ignore
         """public method that returns None - request will be public"""
         return None
+
+    def session_cookie(self, request=None):
+        """returns the value from a cookie request"""
+        if request is None:
+            return None
+        cookie_name = os.getenv('SESSION_NAME')
+        return request.cookies.get(cookie_name)
