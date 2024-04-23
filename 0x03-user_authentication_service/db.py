@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
-
-"""
-a db module
+"""DB module
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.exc import InvalidRequestError, NoResultFound
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 
-from user import User
-from user import Base
+from user import Base, User
+from typing import Dict, List
 
 
 class DB:
-    """
-    db class
+    """DB class
     """
 
     def __init__(self) -> None:
@@ -35,9 +33,7 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """
-        save the user to the database
-        """
+        """saves a user to the database"""
         new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
         self._session.commit()
