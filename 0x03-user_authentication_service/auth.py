@@ -2,7 +2,7 @@
 """module contains hashing method"""
 
 import bcrypt
-import uuid
+import uuid import uuid4
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -37,6 +37,9 @@ class Auth:
         except NoResultFound:
             return False
 
-    def _generate_uuid(self) -> str:
-        """generate uuid"""
-        return str(uuid.uuid4())
+    def create_session(self, email: str) -> str:
+        """create session"""
+        user = self._db.find_user_by(email=email)
+        session_id = str(uuid.uuid4())
+        self._db.update_user(user.id, session_id=session_id)
+        return session_id
