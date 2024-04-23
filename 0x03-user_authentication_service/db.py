@@ -48,11 +48,14 @@ class DB:
         are raised when no results are found, or 
         when wrong query arguments are passed, respectively.
         """
-        if not kwargs:
-            raise InvalidRequestError
-        for key in kwargs.keys():
-            if not hasattr(User, key):
-                raise InvalidRequestError
-        user = self._session.query(User).filter_by(**kwargs).first()
+        try:
+            query = self._session.query(User).filter_by(**kwargs)
+            user = query.one()
+            if user is None:
+                raise NoResultFound
+            return user
+        except InvalidRequestError:
+            raise InvalidRequestError('InvalidRequestError')
+
         
         
