@@ -45,7 +45,7 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """
         Make sure that SQLAlchemy’s NoResultFound and InvalidRequestError
-        are raised when no results are found, or 
+        are raised when no results are found, or
         when wrong query arguments are passed, respectively.
         """
         user = self._session.query(User).filter_by(**kwargs).first()
