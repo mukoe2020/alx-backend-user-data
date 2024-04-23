@@ -19,7 +19,7 @@ def hello() -> str:
     return jsonify({"message": "Bienvenue"})
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def register_user() -> str:
+def user() -> str:
     """
     POST /users
     Register a user
@@ -30,8 +30,10 @@ def register_user() -> str:
 
     try:
         user = Auth.register_user(email, password)
-        return jsonify({"message": "email already registered"}), 400
+        
     except ValueError:
+        return jsonify({"message": "email already registered"}), 400
+    
         return jsonify({"email": f"{email}", "message": "user created"})
         
 
