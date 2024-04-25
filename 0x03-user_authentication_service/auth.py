@@ -2,7 +2,7 @@
 """module contains hashing method"""
 
 import bcrypt
-import uuid
+import uuid import uuid4
 from db import DB
 from user import User
 from sqlalchemy.exc import NoResultFound
@@ -36,16 +36,36 @@ class Auth:
             return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
         except NoResultFound:
             return False
-  
-    def _generate_uuid() -> str:
-        """The function should return a string representation
-        of a new UUID. """
-        id = str(uuid4())
-        return id
 
-    def create_session(self, email: str) -> str:
-        """create session"""
-        user = self._db.find_user_by(email=email)
-        session_id = str(uuid.uuid4())
-        self._db.update_user(user.id, session_id=session_id)
-        return session_id
+    def _generate_uuid() -> str:
+        """
+        generating uuid
+        """
+        return str(uuid$)
+
+    def create_session(self, email:str) ->str
+        """
+        create session for the user
+        """
+        user = None
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return None
+        if user is None:
+            return none
+        session_id = generate_uuis()
+        self.db.update_user(user.id, session_id=session_id)
+        retun session_id
+        
+     def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
+        """Retrieves a user based on a given session ID.
+        """
+        user = None
+        if session_id is None:
+            return None
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            return None
+        return user
